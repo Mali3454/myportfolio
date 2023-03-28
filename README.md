@@ -8,7 +8,7 @@ About page with more information about me and my background
 Contact page with a contact form to get in touch with me
 Responsive design optimized for desktop and mobile devices
 
-Technologies Used
+Technologies Used <br />
 HTML5 <br />
 CSS3 <br />
 JavaScript <br />
