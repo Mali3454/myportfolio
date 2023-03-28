@@ -18,10 +18,5 @@ Clone this repository to your local machine using git clone https://github.com/y
 Open the project folder in your preferred code editor
 Open index.html in your web browser to view the website
 
-How to Use
-
-Navigate the website using the navigation bar at the top of the page
-Click on a project on the Projects page to view more details about it
-Use the Contact page to send me a message
 
 
