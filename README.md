@@ -12,6 +12,7 @@ Technologies Used
 HTML5
 CSS3
 JavaScript
+CurtainJS
 
 Setup and Installation
 Clone this repository to your local machine using git clone https://github.com/your-username/your-repo-name.git
