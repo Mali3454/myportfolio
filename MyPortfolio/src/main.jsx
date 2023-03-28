@@ -7,7 +7,6 @@ import About from './components/About'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Heading from './components/Heading'
-//import './components/curtain'
 import './components/curtain'
 
 import './index.css'
