@@ -9,10 +9,10 @@ Contact page with a contact form to get in touch with me
 Responsive design optimized for desktop and mobile devices
 
 Technologies Used
-HTML5
-CSS3
-JavaScript
-CurtainJS
+HTML5\n
+CSS3\n
+JavaScript\n
+CurtainJS\n
 
 Setup and Installation
 Clone this repository to your local machine using git clone https://github.com/your-username/your-repo-name.git
