@@ -1,7 +1,7 @@
-# My Portfolio Website
-This is my personal portfolio website showcasing my skills, projects, and experience.
+# My Portfolio Website <br />
+This is my personal portfolio website showcasing my skills, projects, and experience. <br />
 
-Features
+Features <br />
 Home page introducing myself and my skills
 Projects page displaying my recent projects
 About page with more information about me and my background
@@ -14,7 +14,7 @@ CSS3 <br />
 JavaScript <br />
 CurtainJS <br />
 
-Setup and Installation
+Setup and Installation <br />
 Clone this repository to your local machine using git clone https://github.com/your-username/your-repo-name.git
 Open the project folder in your preferred code editor
 Open index.html in your web browser to view the website
