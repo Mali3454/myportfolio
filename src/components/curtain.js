@@ -168,7 +168,7 @@ window.addEventListener('load', () => {
 	})
 
 	// we will keep track of all our planes in an array
-	var scrollEffect = 0
+	let scrollEffect = 0
 
 	curtains
 		.onRender(() => {
@@ -251,7 +251,7 @@ window.addEventListener('load', () => {
 `
 
 	// add our planes and handle them
-	for (var i = 0; i < planeElements.length; i++) {
+	for (let i = 0; i < planeElements.length; i++) {
 		const plane = new Plane(curtains, planeElements[i], {
 			vertexShader: vs1,
 			fragmentShader: fs1,
