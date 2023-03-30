@@ -370,6 +370,9 @@ body {
 	.heroText {
 		font-size: 45px;
 		line-height: 30px;
+		text-align: center;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.heroText__h1 {
@@ -416,6 +419,9 @@ body {
 		width: 80%;
 		margin-bottom: 20px;
 		margin-left: 0;
+		text-align: center;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.project__img {
