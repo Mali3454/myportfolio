@@ -7,7 +7,7 @@ import About from './components/About'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Heading from './components/Heading'
-import './components/curtain'
+import './components/curtain.js'
 
 import './index.css'
 import './fonts/MonumentExtended-FreeForPersonalUse/MonumentExtended-Ultrabold.otf'
