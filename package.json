@@ -1,29 +1,33 @@
 {
-  "name": "myportfolio",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "curtainjs": "^1.0.2",
-    "curtainsjs": "^8.1.4",
-    "framer-motion": "^10.9.1",
-    "gsap": "^3.11.5",
-    "locomotive-scroll": "^4.1.4",
-    "react": "^18.2.0",
-    "react-curtains": "^1.0.10",
-    "react-dom": "^18.2.0",
-    "three": "^0.150.1"
-  },
-  "devDependencies": {
-    "@types/react": "^18.0.27",
-    "@types/react-dom": "^18.0.10",
-    "@vitejs/plugin-react": "^3.1.0",
-    "dat.gui": "^0.7.9",
-    "vite": "^4.1.0"
-  }
+	"homepage": "http://mali3454.github.io/myportfolio",
+	"name": "myportfolio",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d build",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"curtainjs": "^1.0.2",
+		"curtainsjs": "^8.1.4",
+		"framer-motion": "^10.9.1",
+		"gsap": "^3.11.5",
+		"locomotive-scroll": "^4.1.4",
+		"react": "^18.2.0",
+		"react-curtains": "^1.0.10",
+		"react-dom": "^18.2.0",
+		"three": "^0.150.1"
+	},
+	"devDependencies": {
+		"@types/react": "^18.0.27",
+		"@types/react-dom": "^18.0.10",
+		"@vitejs/plugin-react": "^3.1.0",
+		"dat.gui": "^0.7.9",
+		"gh-pages": "^5.0.0",
+		"vite": "^4.1.0"
+	}
 }
