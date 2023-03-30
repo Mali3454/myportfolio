@@ -364,6 +364,15 @@ body {
 	.socialmedia {
 		font-size: 20px;
 	}
+
+	#canvas {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 600px;
+		height: 2000px;
+		z-index: 1;
+	}
 }
 
 @media (max-width: 450px) {
