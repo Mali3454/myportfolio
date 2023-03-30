@@ -1,8 +1,6 @@
 import { Curtains, Plane, RenderTarget, ShaderPass } from 'curtainsjs'
 import { TextTexture } from 'https://gistcdn.githack.com/martinlaxenaire/549b3b01ff4bd9d29ce957edd8b56f16/raw/2f111abf99c8dc63499e894af080c198755d1b7a/TextTexture.js'
 
-console.log('chuj')
-
 const scrollFs = `
     #ifdef GL_FRAGMENT_PRECISION_HIGH
     precision highp float;
@@ -102,7 +100,6 @@ window.addEventListener('load', () => {
 		lastValue: 0,
 		effect: 0,
 	}
-	console.log('chuj')
 
 	// on success
 	curtains.onSuccess(() => {
@@ -171,7 +168,7 @@ window.addEventListener('load', () => {
 	})
 
 	// we will keep track of all our planes in an array
-	let scrollEffect = 0
+	var scrollEffect = 0
 
 	curtains
 		.onRender(() => {
@@ -254,7 +251,7 @@ window.addEventListener('load', () => {
 `
 
 	// add our planes and handle them
-	for (let i = 0; i < planeElements.length; i++) {
+	for (var i = 0; i < planeElements.length; i++) {
 		const plane = new Plane(curtains, planeElements[i], {
 			vertexShader: vs1,
 			fragmentShader: fs1,
