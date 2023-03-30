@@ -87,7 +87,7 @@ const fs = `
     }
 `
 
-if (document.readyState === 'complete') {
+window.addEventListener('load', () => {
 	// create curtains instance
 	const curtains = new Curtains({
 		container: 'canvas',
@@ -297,129 +297,130 @@ if (document.readyState === 'complete') {
 		// update the uniform
 		distortionPass.uniforms.scrollEffect.value = scrollEffect
 	})
-} else {
-	window.addEventListener('load', () => {
-		// create curtains instance
-		const curtains = new Curtains({
-			container: 'canvas',
-			pixelRatio: Math.min(1.5, window.devicePixelRatio),
-		})
+})
 
-		// track scroll values
-		const scroll = {
-			value: 0,
-			lastValue: 0,
-			effect: 0,
+document.addEventListener('DOMContentLoaded', () => {
+	// create curtains instance
+	const curtains = new Curtains({
+		container: 'canvas',
+		pixelRatio: Math.min(1.5, window.devicePixelRatio),
+	})
+
+	// track scroll values
+	const scroll = {
+		value: 0,
+		lastValue: 0,
+		effect: 0,
+	}
+
+	// on success
+	curtains.onSuccess(() => {
+		const fonts = {
+			list: ['normal 400 1em "Archivo Black", sans-serif', 'normal 300 1em "Merriweather Sans", sans-serif'],
+			loaded: 0,
 		}
 
-		// on success
-		curtains.onSuccess(() => {
-			const fonts = {
-				list: ['normal 400 1em "Archivo Black", sans-serif', 'normal 300 1em "Merriweather Sans", sans-serif'],
-				loaded: 0,
-			}
+		// load the fonts first
+		fonts.list.forEach(font => {
+			document.fonts.load(font).then(() => {
+				fonts.loaded++
 
-			// load the fonts first
-			fonts.list.forEach(font => {
-				document.fonts.load(font).then(() => {
-					fonts.loaded++
-
-					if (fonts.loaded === fonts.list.length) {
-						// create our shader pass
-						const scrollPass = new ShaderPass(curtains, {
-							fragmentShader: scrollFs,
-							depth: false,
-							uniforms: {
-								scrollEffect: {
-									name: 'uScrollEffect',
-									type: '1f',
-									value: scroll.effect,
-								},
-								scrollStrength: {
-									name: 'uScrollStrength',
-									type: '1f',
-									value: 2.5,
-								},
+				if (fonts.loaded === fonts.list.length) {
+					// create our shader pass
+					const scrollPass = new ShaderPass(curtains, {
+						fragmentShader: scrollFs,
+						depth: false,
+						uniforms: {
+							scrollEffect: {
+								name: 'uScrollEffect',
+								type: '1f',
+								value: scroll.effect,
 							},
+							scrollStrength: {
+								name: 'uScrollStrength',
+								type: '1f',
+								value: 2.5,
+							},
+						},
+					})
+
+					// calculate the lerped scroll effect
+					scrollPass.onRender(() => {
+						scroll.lastValue = scroll.value
+						scroll.value = curtains.getScrollValues().y
+
+						// clamp delta
+						scroll.delta = Math.max(-30, Math.min(30, scroll.lastValue - scroll.value))
+
+						scroll.effect = curtains.lerp(scroll.effect, scroll.delta, 0.05)
+						scrollPass.uniforms.scrollEffect.value = scroll.effect
+					})
+
+					// create our text planes
+					const textEls = document.querySelectorAll('.text-plane')
+
+					textEls.forEach(textEl => {
+						const textPlane = new Plane(curtains, textEl, {
+							vertexShader: vs,
+							fragmentShader: fs,
 						})
 
-						// calculate the lerped scroll effect
-						scrollPass.onRender(() => {
-							scroll.lastValue = scroll.value
-							scroll.value = curtains.getScrollValues().y
-
-							// clamp delta
-							scroll.delta = Math.max(-30, Math.min(30, scroll.lastValue - scroll.value))
-
-							scroll.effect = curtains.lerp(scroll.effect, scroll.delta, 0.05)
-							scrollPass.uniforms.scrollEffect.value = scroll.effect
+						// create the text texture and... that's it!
+						const textTexture = new TextTexture({
+							plane: textPlane,
+							textElement: textPlane.htmlElement,
+							sampler: 'uTexture',
+							resolution: 1.5,
+							skipFontLoading: true, // we've already loaded the fonts
 						})
-
-						// create our text planes
-						const textEls = document.querySelectorAll('.text-plane')
-
-						textEls.forEach(textEl => {
-							const textPlane = new Plane(curtains, textEl, {
-								vertexShader: vs,
-								fragmentShader: fs,
-							})
-
-							// create the text texture and... that's it!
-							const textTexture = new TextTexture({
-								plane: textPlane,
-								textElement: textPlane.htmlElement,
-								sampler: 'uTexture',
-								resolution: 1.5,
-								skipFontLoading: true, // we've already loaded the fonts
-							})
-						})
-					}
-				})
+					})
+				}
 			})
 		})
+	})
 
-		// we will keep track of all our planes in an array
-		let scrollEffect = 0
+	// we will keep track of all our planes in an array
+	let scrollEffect = 0
 
-		curtains
-			.onRender(() => {
-				// update our planes deformation
-				// increase/decrease the effect
-				scrollEffect = curtains.lerp(scrollEffect, 0, 0.05)
-			})
-			.onScroll(() => {
-				// get scroll deltas to apply the effect on scroll
-				const delta = curtains.getScrollDeltas()
+	curtains
+		.onRender(() => {
+			// update our planes deformation
+			// increase/decrease the effect
+			scrollEffect = curtains.lerp(scrollEffect, 0, 0.05)
+		})
+		.onScroll(() => {
+			// get scroll deltas to apply the effect on scroll
+			const delta = curtains.getScrollDeltas()
 
-				// invert value for the effect
-				delta.y = -delta.y
+			// invert value for the effect
+			delta.y = -delta.y
 
-				// threshold
-				if (delta.y > 50) {
-					delta.y = 50
-				} else if (delta.y < -50) {
-					delta.y = -50
-				}
+			// threshold
+			if (delta.y > 50) {
+				delta.y = 50
+			} else if (delta.y < -50) {
+				delta.y = -50
+			}
 
-				if (Math.abs(delta.y) > Math.abs(scrollEffect)) {
-					scrollEffect = curtains.lerp(scrollEffect, delta.y, 0.1)
-				}
-			})
-			.onError(() => {
-				// we will add a class to the document body to display original images
-				document.body.classList.add('no-curtains')
-			})
-			.onContextLost(() => {
-				// on context lost, try to restore the context
-				curtains.restoreContext()
-			})
+			if (Math.abs(delta.y) > Math.abs(scrollEffect)) {
+				scrollEffect = curtains.lerp(scrollEffect, delta.y, 0.1)
+			}
+		})
+		.onError(() => {
+			// we will add a class to the document body to display original images
+			document.body.classList.add('no-curtains')
+		})
+		.onContextLost(() => {
+			// on context lost, try to restore the context
+			curtains.restoreContext()
+		})
 
-		// get our planes elements
-		const planeElements = document.getElementsByClassName('plane')
+	// get our planes elements
+	const planeElements = document.getElementsByClassName('plane')
 
-		const distortionTarget = new RenderTarget(curtains)
+	const distortionTarget = new RenderTarget(curtains)
 
-		const vs1 = `
+	const vs1 = `
 	precision mediump float;
 
 	// default mandatory variables
@@ -447,7 +448,7 @@ if (document.readyState === 'complete') {
 	}
 `
 
-		const fs1 = `
+	const fs1 = `
 	precision mediump float;
 
 	varying vec3 vVertexPosition;
@@ -461,17 +462,17 @@ if (document.readyState === 'complete') {
 	}
 `
 
-		// add our planes and handle them
-		for (let i = 0; i < planeElements.length; i++) {
-			const plane = new Plane(curtains, planeElements[i], {
-				vertexShader: vs1,
-				fragmentShader: fs1,
-			})
+	// add our planes and handle them
+	for (let i = 0; i < planeElements.length; i++) {
+		const plane = new Plane(curtains, planeElements[i], {
+			vertexShader: vs1,
+			fragmentShader: fs1,
+		})
 
-			plane.setRenderTarget(distortionTarget)
-		}
+		plane.setRenderTarget(distortionTarget)
+	}
 
-		const distortionFs = `
+	const distortionFs = `
 	precision mediump float;
 
 	varying vec3 vVertexPosition;
@@ -492,21 +493,20 @@ if (document.readyState === 'complete') {
 	}
 `
 
-		const distortionPass = new ShaderPass(curtains, {
-			fragmentShader: distortionFs,
-			renderTarget: distortionTarget,
-			uniforms: {
-				scrollEffect: {
-					name: 'uScrollEffect',
-					type: '1f',
-					value: 0,
-				},
+	const distortionPass = new ShaderPass(curtains, {
+		fragmentShader: distortionFs,
+		renderTarget: distortionTarget,
+		uniforms: {
+			scrollEffect: {
+				name: 'uScrollEffect',
+				type: '1f',
+				value: 0,
 			},
-		})
-
-		distortionPass.onRender(() => {
-			// update the uniform
-			distortionPass.uniforms.scrollEffect.value = scrollEffect
-		})
+		},
 	})
-}
+
+	distortionPass.onRender(() => {
+		// update the uniform
+		distortionPass.uniforms.scrollEffect.value = scrollEffect
+	})
+})
