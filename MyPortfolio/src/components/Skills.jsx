@@ -50,13 +50,12 @@ const skills = [
 const Skills = () => {
 	return (
 		<>
-			
 			<div id='planes' className='planes'>
 				{skills.map(skill => (
 					<div key={skill.name} className='plane-wrapper'>
 						<div className='plane-inner'>
-							<div className='plane'>
-								<img className='plane' data-sampler='planeTexture' src={skill.img} />
+							<div className='plane skills__img'>
+								<img className='plane skills__img1' data-sampler='planeTexture' src={skill.img} />
 							</div>
 							<span className='text-plane skills__span'>{skill.name}</span>
 						</div>

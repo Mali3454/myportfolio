@@ -1,10 +1,10 @@
 import React from 'react'
 
-import './fluid'
+
 
 const HeroText = ({ text }) => {
 	return (
-		<div className='box'>
+		<div className='box' id='heroText'>
 			<h1 className='heroText__h1 '>
 				<span className='text-plane heroText '>BEGINNER</span>
 				<br></br>
