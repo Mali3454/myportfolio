@@ -100,6 +100,7 @@ window.addEventListener('load', () => {
 		lastValue: 0,
 		effect: 0,
 	}
+	console.log('chuj')
 
 	// on success
 	curtains.onSuccess(() => {
