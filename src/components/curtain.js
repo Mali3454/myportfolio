@@ -88,7 +88,6 @@ const fs = `
 `
 
 window.addEventListener('load', () => {
-	e.preventDefault()
 	// create curtains instance
 	const curtains = new Curtains({
 		container: 'canvas',
