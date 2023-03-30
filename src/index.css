@@ -434,4 +434,8 @@ body {
 		width: 80%;
 		height: 150px;
 	}
+
+	#canvas {
+		width: 400px;
+	}
 }
