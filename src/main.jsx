@@ -16,6 +16,7 @@ import Contact from './components/Contact'
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<div id='canvas'></div>
+		<div id='curtains-canvas'></div>
 
 		<div id='content'>
 			<Navbar />
