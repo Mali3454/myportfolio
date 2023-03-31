@@ -1,4 +1,4 @@
-import { Curtains, Plane, RenderTarget, ShaderPass } from 'curtainsjs'
+import { Curtains, Plane, RenderTarget, ShaderPass } from 'https://cdn.jsdelivr.net/npm/curtainsjs@8.1.2/src/index.mjs'
 import { TextTexture } from 'https://gistcdn.githack.com/martinlaxenaire/549b3b01ff4bd9d29ce957edd8b56f16/raw/2f111abf99c8dc63499e894af080c198755d1b7a/TextTexture.js'
 
 const scrollFs = `
